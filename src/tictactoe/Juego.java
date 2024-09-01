@@ -4,6 +4,48 @@ import java.util.Random;
 
 public class Juego {
 
+    /**
+     * @return the tablero
+     */
+    public char[][] getTablero() {
+        return tablero;
+    }
+
+    /**
+     * @param tablero the tablero to set
+     */
+    public void setTablero(char[][] tablero) {
+        this.tablero = tablero;
+    }
+
+    /**
+     * @return the dificultad
+     */
+    public int getDificultad() {
+        return dificultad;
+    }
+
+    /**
+     * @param dificultad the dificultad to set
+     */
+    public void setDificultad(int dificultad) {
+        this.dificultad = dificultad;
+    }
+
+    /**
+     * @return the jugadorActual
+     */
+    public char getJugadorActual() {
+        return jugadorActual;
+    }
+
+    /**
+     * @param jugadorActual the jugadorActual to set
+     */
+    public void setJugadorActual(char jugadorActual) {
+        this.jugadorActual = jugadorActual;
+    }
+
     private char[][] tablero;
     private int dificultad;
     private char jugadorActual;
@@ -26,13 +68,18 @@ public class Juego {
 
     // Cambia de jugador
     public void cambiarJugador() {
-        jugadorActual = (jugadorActual == 'X') ? 'O' : 'X';
+        if(getJugadorActual() == 'O') {
+            setJugadorActual('X');
+        } else if(getJugadorActual() == 'X') {
+            setJugadorActual('O');
+        }
     }
 
     // Coloca una marca en el tablero
     public boolean colocarMarca(int fila, int columna) {
         if (fila >= 0 && fila < 3 && columna >= 0 && columna < 3 && tablero[fila][columna] == '-') {
             tablero[fila][columna] = jugadorActual;
+            cambiarJugador();
             return true;
         }
         return false;
@@ -40,27 +87,26 @@ public class Juego {
 
     // Verifica si hay un ganador
     public boolean hayGanador() {
-        // Comprobar filas
-        for (int i = 0; i < 3; i++) {
-            if (tablero[i][0] == jugadorActual && tablero[i][1] == jugadorActual && tablero[i][2] == jugadorActual) {
+        for (int j = 0; j < 2; j++) {//ciclo para asegurar comprobar ambos jugadores si ganaron
+            for (int i = 0; i < 3; i++) {
+                // Comprobar filas
+                if (tablero[i][0] == jugadorActual && tablero[i][1] == jugadorActual && tablero[i][2] == jugadorActual) {
+                    return true;
+                }
+                //Comprobar Columnas
+                if (tablero[0][i] == jugadorActual && tablero[1][i] == jugadorActual && tablero[2][i] == jugadorActual) {
+                    return true;
+                }
+            }
+            // Comprobar diagonales
+            if (tablero[0][0] == jugadorActual && tablero[1][1] == jugadorActual && tablero[2][2] == jugadorActual) {
                 return true;
             }
-        }
-
-        // Comprobar columnas
-        for (int i = 0; i < 3; i++) {
-            if (tablero[0][i] == jugadorActual && tablero[1][i] == jugadorActual && tablero[2][i] == jugadorActual) {
+    
+            if (tablero[0][2] == jugadorActual && tablero[1][1] == jugadorActual && tablero[2][0] == jugadorActual) {
                 return true;
             }
-        }
-
-        // Comprobar diagonales
-        if (tablero[0][0] == jugadorActual && tablero[1][1] == jugadorActual && tablero[2][2] == jugadorActual) {
-            return true;
-        }
-
-        if (tablero[0][2] == jugadorActual && tablero[1][1] == jugadorActual && tablero[2][0] == jugadorActual) {
-            return true;
+            cambiarJugador();
         }
 
         return false;
@@ -79,7 +125,7 @@ public class Juego {
     }
 
     // Selecciona la dificultad y ejecuta el nivel correspondiente
-    private void dificultad() {
+    public void dificultad() {
         if (dificultad == 1) {
             nivel1();
         } else if (dificultad == 2) {
@@ -89,37 +135,36 @@ public class Juego {
         } else {
             System.out.println("Error: Dificultad no válida");
         }
+        cambiarJugador();
     }
 
     // Nivel 1: IA juega aleatoriamente
     private void nivel1() {
-        while (!hayGanador() && !esEmpate()) {
-            if (jugadorActual == 'O') {
+
+            if (getJugadorActual() == 'O') {
                 ponerRandom(); // Asumiendo que tienes esta función implementada
             }
-            cambiarJugador();
-        }
+
+        
     }
 
     // Nivel 2: IA se defiende
     private void nivel2() {
-        while (!hayGanador() && !esEmpate()) {
+
             if (jugadorActual == 'O') {
                 defender(); // Asumiendo que tienes esta función implementada
             }
-            cambiarJugador();
-        }
+        
     }
 
     // Nivel 3: IA ataca y se defiende
     private void nivel3() {
-        while (!hayGanador() && !esEmpate()) {
+
             if (jugadorActual == 'O') {
                 if (!intentarGanar()) {
                     defender(); // Asumiendo que tienes esta función implementada
                 }
-            }
-            cambiarJugador();
+            
         }
     }
 
