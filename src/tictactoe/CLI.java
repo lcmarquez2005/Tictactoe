@@ -201,8 +201,52 @@ public class CLI {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         CLI juego = new CLI();
+
+        System.out.println("Solitario (S) o Multiplayer (M)?");
+        String gameMode = scanner.nextLine();
+        if (gameMode.equalsIgnoreCase("s")) {
+            juego.solitario();
+        } else if (gameMode.equalsIgnoreCase("m")) {
+            juego.multiplayer();
+        } else {
+            System.out.println("Error");
+            main(args);
+        }
+
         juego.imprimirTablero();
 
+        scanner.close();
+    }
+
+    private  void solitario() {
+        dificultad();
+
+
+    }
+
+    private  void dificultad() {
+        Scanner in = new Scanner(System.in);
+        System.out.println("En que dificultad deseas jugar (1/2/3)?");
+        String dificultad = in.nextLine();
+        if (dificultad == "1") {
+            
+        } else if (dificultad == "2") {
+            
+        }else if (dificultad == "3") {
+            
+        } else {
+            System.out.println("Error");
+            dificultad();
+        } 
+
+
+
+        in.close();
+    }
+
+    private void multiplayer() {
+        Scanner scanner = new Scanner(System.in);
+        CLI juego = new CLI();
         while (true) {
             int fila, columna;
 
@@ -226,8 +270,8 @@ public class CLI {
                 System.out.println("Movimiento inválido, intenta nuevamente.");
             }
         }
-
         scanner.close();
     }
+    
 
 }
