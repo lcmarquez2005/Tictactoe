@@ -11,7 +11,7 @@ public class GUI extends JFrame {
     private JButton[][] botones;
 
     public GUI(int dificultad) {
-        juego = new Juego(dificultad);
+        juego = new Juego(dificultad, 1);
         botones = new JButton[3][3];
 
         setTitle("Tic Tac Toe");
@@ -75,7 +75,7 @@ public class GUI extends JFrame {
 
     private void reiniciarJuego() {
         juego.cambiarJugador();
-        juego = new Juego(juego.getDificultad()); // Reiniciar el juego
+        juego = new Juego(juego.getDificultad(),1); // Reiniciar el juego
         dispose();
         GUI v1 = new GUI(juego.getDificultad());
         v1.setVisible(true);

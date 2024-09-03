@@ -212,9 +212,6 @@ public class CLI {
             System.out.println("Error");
             start();
         }
-
-        imprimirTablero();
-
         scanner.close();
     }
 
@@ -229,7 +226,7 @@ public class CLI {
         int dificultad = in.nextInt();
         if (dificultad == 1 || dificultad == 2 || dificultad == 3) {
             System.out.println(dificultad);
-            juego = new Juego(dificultad);
+            juego = new Juego(dificultad,0);
         }
         else {
             System.out.println("Error");

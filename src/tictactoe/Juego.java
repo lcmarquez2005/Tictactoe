@@ -51,12 +51,15 @@ public class Juego {
     private int dificultad;
     private char jugadorActual;
 
-    public Juego(int dificultad) {
+    public Juego(int dificultad, int mode) {
         this.dificultad = dificultad;
         this.tablero = new char[3][3];
         this.jugadorActual = 'X'; // Suponemos que 'X' siempre empieza
         inicializarTablero();
-        // start();!solo para cuando la interfaz en CLI
+        if(mode == 0) {
+            start();//!solo para cuando la interfaz en CLI
+        }
+        
     }
 
         // Método auxiliar para imprimir el tablero
