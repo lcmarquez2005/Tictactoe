@@ -112,6 +112,32 @@ public class Juego {
         return false;
     }
 
+    // Verifica si hay un ganador
+    public boolean hayGanador(char jugadorActual) {
+            for (int i = 0; i < 3; i++) {
+                // Comprobar filas
+                if (tablero[i][0] == jugadorActual && tablero[i][1] == jugadorActual && tablero[i][2] == jugadorActual) {
+                    return true;
+                }
+                //Comprobar Columnas
+                if (tablero[0][i] == jugadorActual && tablero[1][i] == jugadorActual && tablero[2][i] == jugadorActual) {
+                    return true;
+                }
+            }
+            // Comprobar diagonales
+            if (tablero[0][0] == jugadorActual && tablero[1][1] == jugadorActual && tablero[2][2] == jugadorActual) {
+                return true;
+            }
+    
+            if (tablero[0][2] == jugadorActual && tablero[1][1] == jugadorActual && tablero[2][0] == jugadorActual) {
+                return true;
+            }
+
+        
+
+        return false;
+    }
+
     // Verifica si hay un empate
     public boolean esEmpate() {
         for (int i = 0; i < 3; i++) {
@@ -151,9 +177,9 @@ public class Juego {
     // Nivel 2: IA se defiende
     private void nivel2() {
 
-            if (jugadorActual == 'O') {
-                defender(); // Asumiendo que tienes esta función implementada
-            }
+        if (jugadorActual == 'O') {
+            defender(); // Asumiendo que tienes esta función implementada
+        }
         
     }
 
