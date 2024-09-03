@@ -11,7 +11,8 @@ public class CLI {
     public CLI() {
         tablero = new char[3][3];
         jugadorActual = 'X';
-        inicializarTablero();
+        // inicializarTablero();
+        start();
     }
 
     // Inicializa el tablero con espacios vacíos
@@ -198,74 +199,68 @@ public class CLI {
 
 
 
-    public static void main(String[] args) {
+    private void start() {
         Scanner scanner = new Scanner(System.in);
-        CLI juego = new CLI();
 
         System.out.println("Solitario (S) o Multiplayer (M)?");
         String gameMode = scanner.nextLine();
         if (gameMode.equalsIgnoreCase("s")) {
-            juego.solitario();
+            solitario();
         } else if (gameMode.equalsIgnoreCase("m")) {
-            juego.multiplayer();
+            multiplayer();
         } else {
             System.out.println("Error");
-            main(args);
+            start();
         }
 
-        juego.imprimirTablero();
+        imprimirTablero();
 
         scanner.close();
     }
 
     private  void solitario() {
         dificultad();
-
-
     }
 
     private  void dificultad() {
         Scanner in = new Scanner(System.in);
         System.out.println("En que dificultad deseas jugar (1/2/3)?");
-        String dificultad = in.nextLine();
-        if (dificultad == "1") {
-            
-        } else if (dificultad == "2") {
-            
-        }else if (dificultad == "3") {
-            
-        } else {
+        Juego juego;
+        int dificultad = in.nextInt();
+        if (dificultad == 1 || dificultad == 2 || dificultad == 3) {
+            System.out.println(dificultad);
+            juego = new Juego(dificultad);
+        }
+        else {
             System.out.println("Error");
             dificultad();
         } 
-
-
 
         in.close();
     }
 
     private void multiplayer() {
         Scanner scanner = new Scanner(System.in);
-        CLI juego = new CLI();
+        // juego.imprimirTablero();
         while (true) {
             int fila, columna;
 
-            System.out.println("Jugador " + juego.jugadorActual + ", ingresa fila y columna (0-2): ");
+            System.out.println("Jugador " + jugadorActual + ", ingresa fila y columna (0-2): ");
             fila = scanner.nextInt();
             columna = scanner.nextInt();
 
-            if (juego.colocarMarca(fila, columna)) {
-                juego.imprimirTablero();
+            if (colocarMarca(fila, columna)) {
+                imprimirTablero();
 
-                if (juego.hayGanador()) {
-                    System.out.println("¡Jugador " + juego.jugadorActual + " gana!");
+                if (hayGanador()) {
+                    System.out.println("¡Jugador " + jugadorActual + " gana!");
                     break;
-                } else if (juego.esEmpate()) {
+                } else if (esEmpate()) {
                     System.out.println("¡Es un empate!");
                     break;
                 }
 
-                juego.cambiarJugador();
+                cambiarJugador();
             } else {
                 System.out.println("Movimiento inválido, intenta nuevamente.");
             }

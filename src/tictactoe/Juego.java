@@ -1,6 +1,7 @@
 package tictactoe;
 
 import java.util.Random;
+import java.util.Scanner;
 
 public class Juego {
 
@@ -55,6 +56,17 @@ public class Juego {
         this.tablero = new char[3][3];
         this.jugadorActual = 'X'; // Suponemos que 'X' siempre empieza
         inicializarTablero();
+        // start();!solo para cuando la interfaz en CLI
+    }
+
+        // Método auxiliar para imprimir el tablero
+    private static void imprimirTablero(char[][] tablero) {
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                System.out.print(tablero[i][j] + " ");
+            }
+            System.out.println();
+        }
     }
 
     // Inicializa el tablero con espacios vacíos
@@ -236,5 +248,48 @@ public class Juego {
             }
         }
         ponerRandom(); // Si no hay nada que bloquear, juega aleatoriamente
+    }
+
+
+    private void start() {
+        Scanner scanner = new Scanner(System.in);
+                // Loop del juego
+
+        boolean partidaTerminada = false;
+        while (!partidaTerminada) {
+
+            System.out.println("\nTablero actual:");
+            imprimirTablero(getTablero());
+            // Verificar si hay ganador
+            if (hayGanador()) {
+                System.out.println("\nTablero final:");
+                imprimirTablero(getTablero());
+                System.out.println("¡Jugador " + getJugadorActual() + " ha ganado!");
+                partidaTerminada = true;
+                break;
+            } else if (esEmpate()) {
+                System.out.println("\nTablero final:");
+                imprimirTablero(getTablero());
+                System.out.println("¡Es un empate!");
+                partidaTerminada = true;
+                break;
+            } 
+
+            // Turno del jugador
+            if (getJugadorActual() == 'X') {
+                System.out.println("Tu turno (X). Ingresa fila y columna (0, 1 o 2):");
+                int fila = scanner.nextInt();
+                int columna = scanner.nextInt();
+                if (!colocarMarca(fila, columna)) {
+                    System.out.println("Movimiento no válido, intenta de nuevo.");
+                    continue;
+                }
+            } else if (getJugadorActual() == 'O') {
+                System.out.println("Turno de la IA (O).");
+                dificultad();
+                // System.out.println(hayGanador());
+            }
+        }
+        scanner.close();
     }
 }
