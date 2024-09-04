@@ -28,7 +28,7 @@ public class Tictactoe {
                 CLI programa = new CLI();
                 break;
             } else if (mode == 2) {
-                GUI v1 = new GUI(1);
+                new GUI();
                 // v1.setVisible(true);
                 break;
             } 

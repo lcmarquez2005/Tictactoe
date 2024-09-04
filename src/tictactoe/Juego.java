@@ -103,6 +103,7 @@ public class Juego {
     // Verifica si hay un ganador
     public boolean hayGanador() {
         for (int j = 0; j < 2; j++) {//ciclo para asegurar comprobar ambos jugadores si ganaron
+        // cambiarJugador();
             for (int i = 0; i < 3; i++) {
                 // Comprobar filas
                 if (tablero[i][0] == jugadorActual && tablero[i][1] == jugadorActual && tablero[i][2] == jugadorActual) {
@@ -167,10 +168,12 @@ public class Juego {
 
     // Selecciona la dificultad y ejecuta el nivel correspondiente
     public void dificultad() {
+        hayGanador();
         if (dificultad == 1) {
             nivel1();
         } else if (dificultad == 2) {
             nivel2();
+
         } else if (dificultad == 3) {
             nivel3();
         } else {
@@ -238,15 +241,19 @@ public class Juego {
 
     // Defiende contra el jugador
     private void defender() {
+        char oponente = (jugadorActual == 'X') ? 'O' : 'X'; // Identificar el oponente
+        
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
-                if (tablero[i][j] == '-') {
-                    tablero[i][j] = (jugadorActual == 'X') ? 'O' : 'X';
-                    if (hayGanador()) {
-                        tablero[i][j] = jugadorActual;
+                if (tablero[i][j] == '-') { // Si la posición está vacía
+                    tablero[i][j] = oponente; // Simular la jugada del oponente
+                    
+                    if (hayGanador(oponente)) { // Comprobar si el oponente ganaría
+                        tablero[i][j] = jugadorActual; // Bloquear la jugada del oponente
                         return;
                     }
-                    tablero[i][j] = '-'; // Revertir movimiento si no es necesario bloquear
+                    
+                    tablero[i][j] = '-'; // Revertir el tablero si no es una amenaza
                 }
             }
         }
@@ -263,7 +270,6 @@ public class Juego {
 
             System.out.println("\nTablero actual:");
             imprimirTablero(getTablero());
-            // Verificar si hay ganador
             if (hayGanador()) {
                 System.out.println("\nTablero final:");
                 imprimirTablero(getTablero());
@@ -277,6 +283,9 @@ public class Juego {
                 partidaTerminada = true;
                 break;
             } 
+
+            
+            System.out.println(hayGanador());
 
             // Turno del jugador
             if (getJugadorActual() == 'X') {
@@ -292,6 +301,7 @@ public class Juego {
                 dificultad();
                 // System.out.println(hayGanador());
             }
+
         }
         scanner.close();
     }

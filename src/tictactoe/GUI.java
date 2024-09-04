@@ -46,6 +46,7 @@ public class GUI extends JFrame {
     }
 
     private void realizarMovimientoIA() {
+        verificarEstadoJuego();
         juego.cambiarJugador();
         juego.dificultad(); // IA realiza su movimiento según la dificultad
         actualizarTablero();
@@ -82,6 +83,8 @@ public class GUI extends JFrame {
 
     }
 
+    //!hay un bug de si ambos simultaneamente intentan ganar
+    //se debe comprobar tambien cuando luego del turno de la ia, para ver si esta gano
     public GUI() {
         // Solicitar la dificultad al usuario antes de iniciar la interfaz
         String[] opciones = {"Fácil", "Medio", "Difícil"};
@@ -100,7 +103,6 @@ public class GUI extends JFrame {
         } else {
             dificultad += 1; // Convertir la opción seleccionada a 1, 2 o 3
             new GUI(dificultad);
-            System.out.println(4);
         }
     }
 }
